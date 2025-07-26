@@ -35,17 +35,28 @@ public class ValidationBasicsTest {
     @Test
     @DisplayName("@Null and @NotNull with groups (Create vs Update)")
     void testNullNotNullWithGroups() {
-        Address addr = new Address("1 Main", "Metropolis", "CA", "90210");
-        Customer create = new Customer(null, "Alice", "alice@example.com", LocalDate.of(1990, 1, 1),
-                List.of("vip"), addr);
+        Address addr = new Address("1 Main",
+                "Metropolis",
+                "CA",
+                "90210");
+        Customer create = new Customer(null,
+                "Alice",
+                "alice@example.com",
+                LocalDate.of(1990, 1, 1),
+                List.of("vip"),
+                addr);
 
         // id must be null on create -> valid
         Set<ConstraintViolation<Customer>> v1 = validator.validate(create, Groups.Create.class);
         assertTrue(v1.isEmpty(), "Create should be valid when id is null");
 
         // For update, id must be present
-        Customer updateMissingId = new Customer(null, "Alice", "alice@example.com", LocalDate.of(1990, 1, 1),
-                List.of("vip"), addr);
+        Customer updateMissingId = new Customer(null,
+                "Alice",
+                "alice@example.com",
+                LocalDate.of(1990, 1, 1),
+                List.of("vip"),
+                addr);
         Set<ConstraintViolation<Customer>> v2 = validator.validate(updateMissingId, Groups.Update.class);
         assertEquals(1, v2.size());
         ConstraintViolation<Customer> cv = v2.iterator().next();
@@ -55,7 +66,10 @@ public class ValidationBasicsTest {
     @Test
     @DisplayName("Built-in constraints: @NotBlank, @Size, @Email, @Past, @Pattern, @Positive, @DecimalMin")
     void testBuiltinConstraints() {
-        Address badAddr = new Address("", "", "California", "ABCDE"); // invalid: blanks, bad state, bad zip
+        Address badAddr = new Address("",
+                "",
+                "California",
+                "ABCDE"); // invalid: blanks, bad state, bad zip
         Customer c = new Customer(
                 1L,
                 "A", // too short
@@ -93,7 +107,9 @@ public class ValidationBasicsTest {
     @Test
     @DisplayName("OrderItem: @NotBlank, @Positive, @DecimalMin")
     void testOrderItemConstraints() {
-        OrderItem item = new OrderItem("", 0, new BigDecimal("0.0"));
+        OrderItem item = new OrderItem("",
+                0,
+                new BigDecimal("0.0"));
         Set<ConstraintViolation<OrderItem>> violations = validator.validate(item);
         assertEquals(3, violations.size());
         Set<String> paths = new HashSet<>();
