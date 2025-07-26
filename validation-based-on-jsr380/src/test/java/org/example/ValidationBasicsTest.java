@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,7 +37,7 @@ public class ValidationBasicsTest {
     void testNullNotNullWithGroups() {
         Address addr = new Address("1 Main", "Metropolis", "CA", "90210");
         Customer create = new Customer(null, "Alice", "alice@example.com", LocalDate.of(1990, 1, 1),
-                Arrays.asList("vip"), addr);
+                List.of("vip"), addr);
 
         // id must be null on create -> valid
         Set<ConstraintViolation<Customer>> v1 = validator.validate(create, Groups.Create.class);
@@ -44,7 +45,7 @@ public class ValidationBasicsTest {
 
         // For update, id must be present
         Customer updateMissingId = new Customer(null, "Alice", "alice@example.com", LocalDate.of(1990, 1, 1),
-                Arrays.asList("vip"), addr);
+                List.of("vip"), addr);
         Set<ConstraintViolation<Customer>> v2 = validator.validate(updateMissingId, Groups.Update.class);
         assertEquals(1, v2.size());
         ConstraintViolation<Customer> cv = v2.iterator().next();
