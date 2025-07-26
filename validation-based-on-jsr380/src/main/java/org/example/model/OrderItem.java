@@ -1,6 +1,8 @@
 package org.example.model;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class OrderItem {
@@ -11,7 +13,7 @@ public class OrderItem {
     @Positive
     private int quantity;
 
-    @DecimalMin(value = "0.01", inclusive = true)
+    @DecimalMin(value = "0.01")
     private BigDecimal price;
 
     public OrderItem() {}
