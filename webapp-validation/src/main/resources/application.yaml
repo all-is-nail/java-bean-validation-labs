@@ -1,0 +1,2 @@
+server:
+  port: 8080 # 应用服务 WEB 访问端口
