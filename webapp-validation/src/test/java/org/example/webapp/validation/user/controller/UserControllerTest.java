@@ -20,7 +20,7 @@ class UserControllerTest {
 
     @Test
     public void testGetUserWithValidParam() throws Exception {
-        mockMvc.perform(get("/user").param("name", "testUser"))
+        mockMvc.perform(get("/userWithValidatedAnnotation/user").param("name", "testUser"))
                 .andExpect(status().isOk())
                 .andExpect(result -> {
                     assertEquals("application/json", result.getResponse().getContentType());
@@ -31,7 +31,7 @@ class UserControllerTest {
     @Test
     public void testGetUserWithInvalidParam() throws Exception {
 
-        mockMvc.perform(get("/user"))
+        mockMvc.perform(get("/userWithValidatedAnnotation/user"))
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> {
                     assertEquals("text/plain;charset=UTF-8", result.getResponse().getContentType());
