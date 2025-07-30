@@ -22,7 +22,6 @@ public class UserWithValidAnnotationController {
             return ResponseEntity.badRequest().body("Validation errors occurred");
         }
 
-        User defaultUser = new User();
         return ResponseEntity.ok("User updated: " + user.getName() + ", Age: " + user.getAge());
     }
 
