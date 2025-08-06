@@ -64,6 +64,34 @@ public class ValidationBasicsTest {
     }
 
     @Test
+    public void testNullWithGroups() {
+        Customer create = new Customer(null,
+                "Alice",
+                "alice@example.com",
+                LocalDate.of(1990, 1, 1),
+                List.of("vip"),
+                null);
+
+        Set<ConstraintViolation<Customer>> violations = validator.validate(create, Groups.Create.class);
+        assertTrue(violations.isEmpty(), "Create should be valid when id is null");
+    }
+
+    @Test
+    public void testNotNullWithGroups() {
+        Customer updateMissingId = new Customer(null,
+                "Alice",
+                "alice@example.com",
+                LocalDate.of(1990, 1, 1),
+                List.of("vip"),
+                null);
+
+        Set<ConstraintViolation<Customer>> violations = validator.validate(updateMissingId, Groups.Update.class);
+        assertEquals(1, violations.size());
+        ConstraintViolation<Customer> cv = violations.iterator().next();
+        assertEquals("id", cv.getPropertyPath().toString());
+    }
+
+    @Test
     @DisplayName("Built-in constraints: @NotBlank, @Size, @Email, @Past, @Pattern, @Positive, @DecimalMin")
     void testBuiltinConstraints() {
         Address badAddr = new Address("",
