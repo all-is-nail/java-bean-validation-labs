@@ -36,6 +36,7 @@ public class ValidationBasicsTest {
 
         assertFalse(violations.isEmpty(), "Expected violations for null account number");
         assertEquals(1, violations.size(), "Expected one violation for null account number");
+        assertEquals("不能为null", violations.iterator().next().getMessage());
     }
 
     @Test
