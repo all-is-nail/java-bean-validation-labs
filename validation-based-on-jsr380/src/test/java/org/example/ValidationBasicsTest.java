@@ -149,7 +149,7 @@ public class ValidationBasicsTest {
         // Customer.tags[1] & tags[2]
         assertTrue(paths.stream().anyMatch(p -> p.startsWith("tags[")));
         // Nested Address fields
-        assertTrue(paths.contains("address.line1"));
+        assertTrue(paths.contains("address.line"));
         assertTrue(paths.contains("address.city"));
         assertTrue(paths.contains("address.state"));
         assertTrue(paths.contains("address.zip"));
