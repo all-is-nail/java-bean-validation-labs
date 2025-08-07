@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.model.Address;
-import org.example.model.Customer;
-import org.example.model.Groups;
-import org.example.model.OrderItem;
+import org.example.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,6 +27,23 @@ public class ValidationBasicsTest {
     static void init() {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
+    }
+
+    @Test
+    public void testCarValidation() {
+        // Create a valid car
+        Car car = new Car("Toyota", "ABC123", 4);
+        Set<ConstraintViolation<Car>> violations = validator.validate(car);
+        assertTrue(violations.isEmpty(), "Valid car should have no violations");
+
+        // Create an invalid car
+        // null manufacturer, short license plate, too few seats
+        Car invalidCar = new Car(null, "A", 1);
+        Set<ConstraintViolation<Car>> invalidViolations = validator.validate(invalidCar);
+        assertFalse(invalidViolations.isEmpty(), "Invalid car should have violations");
+
+        // Check specific violations
+        assertEquals(3, invalidViolations.size());
     }
 
     @Test
