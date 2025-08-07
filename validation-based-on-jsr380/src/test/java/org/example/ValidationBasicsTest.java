@@ -30,6 +30,15 @@ public class ValidationBasicsTest {
     }
 
     @Test
+    public void testNullValidation() {
+        Account account = new Account();
+        Set<ConstraintViolation<Account>> violations = validator.validate(account);
+
+        assertFalse(violations.isEmpty(), "Expected violations for null account number");
+        assertEquals(1, violations.size(), "Expected one violation for null account number");
+    }
+
+    @Test
     public void testCarValidation() {
         // Create a valid car
         Car car = new Car("Toyota", "ABC123", 4);
