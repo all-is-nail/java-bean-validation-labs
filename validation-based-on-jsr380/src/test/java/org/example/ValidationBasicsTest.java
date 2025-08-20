@@ -172,4 +172,16 @@ public class ValidationBasicsTest {
         assertTrue(paths.contains("quantity"));
         assertTrue(paths.contains("price"));
     }
+
+    @Test
+    public void testNotBlankValidationWithCustomizeMessage() {
+        Account account = new Account();
+        account.setAccountNumber("");
+        account.setAccountHolderName("");
+        Set<ConstraintViolation<Account>> violations = validator.validate(account);
+
+        assertFalse(violations.isEmpty(), "Expected violations for blank account holder number");
+        assertEquals(1, violations.size(), "Expected one violation for blank account holder number");
+        assertEquals("Account holder name cannot be blank", violations.iterator().next().getMessage());
+    }
 }
